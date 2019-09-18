@@ -52,7 +52,7 @@ class Board extends Component {
     let board = [];
     // TODO: create array-of-arrays of true/false values
     for (let r = 0; r < this.props.nrows; r++) {
-      board.push(Array.from({ length: this.props.ncols }));
+      board.push(Array.from({ length: this.props.ncols }, c => this.randomizer()));
     }
 
     return board
@@ -73,10 +73,12 @@ class Board extends Component {
       }
     }
     // TODO: flip this cell and the cells around it
+    flipCell(y, x);
     flipCell(y-1, x);
     flipCell(y+1, x);
     flipCell(y, x-1);
     flipCell(y, x+1);
+
   // win when every cell is turned off
   // TODO: determine is the game has been won
   let hasWon = "You Won!"
@@ -92,7 +94,7 @@ class Board extends Component {
         <tbody>
           {this.state.board.map((r, rIdx, arr) => 
           <tr key={rIdx}>{arr.map((c, cIdx) => {
-            return <Cell key={`${rIdx}-${cIdx}`} id={`${rIdx}-${cIdx}`} flipCellsAroundMe={this.flipCellsAroundMe} isLit={this.randomizer()} />
+            return <Cell key={`${rIdx}-${cIdx}`} id={`${rIdx}-${cIdx}`} flipCellsAroundMe={this.flipCellsAroundMe} isLit={this.state.board[rIdx][cIdx]} />
           })}</tr>)}
         </tbody>
       </table>
